@@ -10,10 +10,18 @@ const CATEGORY_ICON_MAP = {
   mountain: '⛰️',
   cultural: '🏛️',
   history: '🏰',
+  historic: '🏰',
+  landmark: '🏛️',
   island: '🏝️',
   food: '🍜',
   nature: '🌿',
   shopping: '🛍️',
+  mall: '🛍️',
+  museum: '🖼️',
+  church: '⛪',
+  adventure: '🎒',
+  park: '🎡',
+  theme: '🎢',
 };
 
 function getCategoryIcon(name) {
@@ -47,12 +55,24 @@ const stats = [
   { label: 'Countries', value: '80+', icon: Compass },
 ];
 
+const FEATURED_CATEGORY_NAMES = [
+  'Church',
+  'Historic Landmark',
+  'Nature',
+  'Shopping Mall',
+  'Adventure',
+];
+
 export default function HomePage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [suggestedPlans, setSuggestedPlans] = useState([]);
   const navigate = useNavigate();
   const { places: featured } = usePlaces({ featured: true });
   const { categories } = useCategories();
+
+  const visibleCategories = categories.filter(cat =>
+    FEATURED_CATEGORY_NAMES.includes(cat.name)
+  );
 
   useEffect(() => {
     setSuggestedPlans([]);
@@ -81,7 +101,7 @@ export default function HomePage() {
             <section className="flex items-center gap-2 mb-6">
               <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-primary-500/20 text-primary-300 border border-primary-500/30 rounded-full text-xs font-semibold tracking-wide uppercase">
                 <Zap className="w-3 h-3" />
-              Smart Travel Planning
+                Smart Travel Planning
               </span>
             </section>
 
@@ -152,17 +172,31 @@ export default function HomePage() {
             <p className="section-subtitle">Find your perfect travel style</p>
           </section>
 
-          <section className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3">
-            {categories.map(cat => (
+          <section className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5">
+            {visibleCategories.map(cat => (
               <Link
                 key={cat.id}
                 to={`/explore?category=${cat.id}`}
-                className="group flex flex-col items-center p-4 rounded-2xl border-2 border-neutral-100 dark:border-neutral-800 hover:border-primary-300 dark:hover:border-primary-700 hover:bg-primary-50 dark:hover:bg-primary-900/20 transition-all duration-200 text-center"
+                className="group flex flex-col items-center p-6 rounded-3xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900/40 hover:border-primary-300 dark:hover:border-primary-700 hover:bg-primary-50 dark:hover:bg-primary-900/20 transition-all duration-300 text-center hover:-translate-y-1 hover:shadow-lg"
               >
-                <span className="text-3xl mb-2">{getCategoryIcon(cat.name)}</span>
-                <span className="text-sm font-semibold text-neutral-700 dark:text-neutral-300 group-hover:text-primary-700 dark:group-hover:text-primary-400">{cat.name}</span>
+                <span className="text-5xl mb-4 transition-transform duration-300 group-hover:scale-110">
+                  {getCategoryIcon(cat.name)}
+                </span>
+                <span className="text-base font-semibold text-neutral-700 dark:text-neutral-300 group-hover:text-primary-700 dark:group-hover:text-primary-400">
+                  {cat.name}
+                </span>
               </Link>
             ))}
+          </section>
+
+          <section className="text-center mt-10">
+            <Link
+              to="/explore"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-primary-600 hover:bg-primary-700 text-white font-semibold transition-all duration-300 shadow-lg hover:shadow-xl"
+            >
+              View All Categories
+              <ArrowRight className="w-4 h-4" />
+            </Link>
           </section>
         </section>
       </section>
@@ -302,7 +336,7 @@ export default function HomePage() {
             Join thousands of travelers planning their dream trips with TravelWise.
           </p>
           <section className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/register" className="px-8 py-4 bg-white text-primary-700 font-semibold rounded-2xl hover:bg-primary-50 transition-colors shadow-xl">
+            <Link to="/trips" className="px-8 py-4 bg-white text-primary-700 font-semibold rounded-2xl hover:bg-primary-50 transition-colors shadow-xl">
               Start Planning Free
             </Link>
             <Link to="/explore" className="px-8 py-4 bg-primary-600/50 text-white font-semibold rounded-2xl hover:bg-primary-600 transition-colors border border-primary-500">
