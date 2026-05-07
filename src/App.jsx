@@ -6,7 +6,7 @@ import { ProtectedRoute } from './components/layout/ProtectedRoute';
 
 import HomePage from './pages/HomePage';
 import ExplorePage from './pages/ExplorePage';
-// import PlaceDetailPage from './pages/PlaceDetailPage';
+import PlaceDetailPage from './pages/PlaceDetailPage';
 import FavoritesPage from './pages/FavoritesPage';
 // import TripsPage from './pages/TripsPage';
 // import TripPlannerPage from './pages/TripPlannerPage';
@@ -37,7 +37,7 @@ const router = createBrowserRouter([
         children: [
           { path: '/', element: <HomePage /> },
           { path: '/explore', element: <ExplorePage /> },
-          // { path: '/places/:id', element: <PlaceDetailPage /> },
+          { path: '/places/:id', element: <PlaceDetailPage /> },
           {
             path: '/favorites',
             element: <ProtectedRoute><FavoritesPage /></ProtectedRoute>,
