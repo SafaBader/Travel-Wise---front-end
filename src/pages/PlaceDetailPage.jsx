@@ -198,7 +198,7 @@ export default function PlaceDetailPage() {
                     {/* Sidebar */}
                     <section className="space-y-4">
                         <section className="bg-white dark:bg-neutral-900 rounded-2xl border border-neutral-100 dark:border-neutral-800 p-5 shadow-sm space-y-4">
-                            <h3 className="font-semibold text-neutral-900 dark:text-neutral-100">Trip Details</h3>
+                            <h3 className="font-semibold text-neutral-900 dark:text-neutral-100">Place Details</h3>
                             {[
                                 { icon: MapPin, label: 'Location', value: `${place.location}, ${place.country}` },
                                 { icon: Clock, label: 'Best Duration', value: place.estimated_duration || 'Flexible' },
