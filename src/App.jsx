@@ -7,7 +7,7 @@ import { ProtectedRoute } from './components/layout/ProtectedRoute';
 import HomePage from './pages/HomePage';
 import ExplorePage from './pages/ExplorePage';
 // import PlaceDetailPage from './pages/PlaceDetailPage';
-// import FavoritesPage from './pages/FavoritesPage';
+import FavoritesPage from './pages/FavoritesPage';
 // import TripsPage from './pages/TripsPage';
 // import TripPlannerPage from './pages/TripPlannerPage';
 // import TripDetailPage from './pages/TripDetailPage';
@@ -38,10 +38,10 @@ const router = createBrowserRouter([
           { path: '/', element: <HomePage /> },
           { path: '/explore', element: <ExplorePage /> },
           // { path: '/places/:id', element: <PlaceDetailPage /> },
-          // {
-          //   path: '/favorites',
-          //   element: <ProtectedRoute><FavoritesPage /></ProtectedRoute>,
-          // },
+          {
+            path: '/favorites',
+            element: <ProtectedRoute><FavoritesPage /></ProtectedRoute>,
+          },
           // {
           //   path: '/trips',
           //   element: <ProtectedRoute><TripsPage /></ProtectedRoute>,

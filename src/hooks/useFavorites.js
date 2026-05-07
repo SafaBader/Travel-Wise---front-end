@@ -7,6 +7,7 @@ export function useFavorites() {
   const [favorites, setFavorites] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  
   const fetchFavorites = useCallback(async () => {
     if (!user) { setFavorites([]); setLoading(false); return; }
     setLoading(true);
