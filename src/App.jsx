@@ -11,7 +11,7 @@ import FavoritesPage from './pages/FavoritesPage';
 // import TripsPage from './pages/TripsPage';
 // import TripPlannerPage from './pages/TripPlannerPage';
 // import TripDetailPage from './pages/TripDetailPage';
-// import DashboardPage from './pages/DashboardPage';
+import DashboardPage from './pages/DashboardPage';
 import ProfilePage from './pages/ProfilePage';
 import LoginPage from './pages/auth/LoginPage';
 import RegisterPage from './pages/auth/RegisterPage';
@@ -54,10 +54,10 @@ const router = createBrowserRouter([
           //   path: '/trips/:id/detail',
           //   element: <ProtectedRoute><TripDetailPage /></ProtectedRoute>,
           // },
-          // {
-          //   path: '/dashboard',
-          //   element: <ProtectedRoute><DashboardPage /></ProtectedRoute>,
-          // },
+          {
+            path: '/dashboard',
+            element: <ProtectedRoute><DashboardPage /></ProtectedRoute>,
+          },
           {
             path: '/profile',
             element: <ProtectedRoute><ProfilePage /></ProtectedRoute>,
