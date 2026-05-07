@@ -63,10 +63,10 @@ export default function ExplorePage() {
       <section className="bg-gradient-to-br from-primary-800 via-primary-700 to-primary-600 dark:from-neutral-900 dark:via-primary-950 dark:to-neutral-900 py-14 relative overflow-hidden">
         <section className="absolute inset-0 opacity-10">
           <section className="absolute top-0 right-0 w-96 h-96 bg-white rounded-full translate-x-1/3 -translate-y-1/2 blur-3xl" />
-          <disectionv className="absolute bottom-0 left-0 w-64 h-64 bg-white rounded-full -translate-x-1/3 translate-y-1/2 blur-3xl" />
+          <section className="absolute bottom-0 left-0 w-64 h-64 bg-white rounded-full -translate-x-1/3 translate-y-1/2 blur-3xl" />
         </section>
 
-        <section>
+        <section className="page-container relative z-10">
           <section className="flex items-center gap-2 mb-3">
             <Globe className="w-4 h-4 text-primary-300" />
             <span className="text-primary-300 text-sm font-medium">
