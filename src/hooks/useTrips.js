@@ -64,11 +64,11 @@ export function useTrips() {
     setLoading(true);
     setError('');
     try {
-      const data = await api.get('/plans');
+      const data = await api.get('/trips');
       setTrips((Array.isArray(data) ? data : []).map(normalizeTrip));
     } catch (fetchError) {
       setTrips([]);
-      setError(fetchError?.message || 'Unable to load plans.');
+      setError(fetchError?.message || 'Unable to load trips.');
     } finally {
       setLoading(false);
     }
@@ -79,8 +79,12 @@ export function useTrips() {
   const createTrip = async (trip) => {
     if (!user) throw new Error('You must be logged in to create a trip');
     const payload = serializeTripPayload(trip);
-    const data = await api.post('/plans', payload);
-    const created = normalizeTrip(data.trip || data.plan || data);
+    const data = await api.post('/trips', payload);
+    let created = normalizeTrip(data.trip || data.plan || data);
+    if (trip.days?.length && created?.id) {
+      const updatedData = await api.put(`/trips/${created.id}`, { days: serializeDays(trip.days) });
+      created = normalizeTrip(updatedData.trip || updatedData.plan || updatedData);
+    }
     setTrips(prev => [created, ...prev]);
     return created;
   };
@@ -88,7 +92,7 @@ export function useTrips() {
   const updateTrip = async (id, updates) => {
     if (!user) throw new Error('You must be logged in to update a trip');
     const payload = serializeTripPayload(updates);
-    const data = await api.put(`/plans/${id}`, payload);
+    const data = await api.put(`/trips/${id}`, payload);
     const updated = normalizeTrip(data.trip || data.plan || data);
     setTrips(prev => prev.map(t => t.id === id ? updated : t));
     return updated;
@@ -96,7 +100,7 @@ export function useTrips() {
 
   const deleteTrip = async (id) => {
     if (!user) throw new Error('You must be logged in to delete a trip');
-    await api.delete(`/plans/${id}`);
+    await api.delete(`/trips/${id}`);
     setTrips(prev => prev.filter(t => t.id !== id));
   };
 
@@ -130,7 +134,7 @@ export function useTripDetail(tripId) {
     if (!tripId) return;
     setLoading(true);
     try {
-      const data = await api.get(`/plans/${tripId}`);
+      const data = await api.get(`/trips/${tripId}`);
       const normalized = normalizeTrip(data.trip || data.plan || data);
       setTrip(normalized);
       setDays(normalizeDays(normalized.days || []));
@@ -147,7 +151,7 @@ export function useTripDetail(tripId) {
     setSaving(true);
     setSaveError('');
     try {
-      const data = await api.put(`/plans/${tripId}`, { days: serializeDays(nextDays) });
+      const data = await api.put(`/trips/${tripId}`, { days: serializeDays(nextDays) });
       const updated = normalizeTrip(data.trip || data.plan || data);
       setTrip(updated);
       setDays(normalizeDays(updated.days || []));

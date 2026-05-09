@@ -8,9 +8,9 @@ import HomePage from './pages/HomePage';
 import ExplorePage from './pages/ExplorePage';
 import PlaceDetailPage from './pages/PlaceDetailPage';
 import FavoritesPage from './pages/FavoritesPage';
-// import TripsPage from './pages/TripsPage';
-// import TripPlannerPage from './pages/TripPlannerPage';
-// import TripDetailPage from './pages/TripDetailPage';
+import TripsPage from './pages/TripsPage';
+import PlannerPage from './pages/PlannerPage';
+import TripPlannerPage from './pages/TripPlannerPage';
 import DashboardPage from './pages/DashboardPage';
 import ProfilePage from './pages/ProfilePage';
 import LoginPage from './pages/auth/LoginPage';
@@ -42,18 +42,22 @@ const router = createBrowserRouter([
             path: '/favorites',
             element: <ProtectedRoute><FavoritesPage /></ProtectedRoute>,
           },
-          // {
-          //   path: '/trips',
-          //   element: <ProtectedRoute><TripsPage /></ProtectedRoute>,
-          // },
-          // {
-          //   path: '/trips/:id',
-          //   element: <ProtectedRoute><TripPlannerPage /></ProtectedRoute>,
-          // },
-          // {
-          //   path: '/trips/:id/detail',
-          //   element: <ProtectedRoute><TripDetailPage /></ProtectedRoute>,
-          // },
+          {
+            path: '/planner',
+            element: <ProtectedRoute><PlannerPage /></ProtectedRoute>,
+          },
+          {
+            path: '/planner/:id',
+            element: <ProtectedRoute><TripPlannerPage /></ProtectedRoute>,
+          },
+          {
+            path: '/trips',
+            element: <ProtectedRoute><TripsPage /></ProtectedRoute>,
+          },
+          {
+            path: '/trips/:id',
+            element: <ProtectedRoute><TripPlannerPage /></ProtectedRoute>,
+          },
           {
             path: '/dashboard',
             element: <ProtectedRoute><DashboardPage /></ProtectedRoute>,

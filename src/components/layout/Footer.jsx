@@ -41,7 +41,7 @@ export default function Footer() {
           <section>
             <h4 className="text-white font-semibold mb-4 text-sm uppercase tracking-wider">Plan</h4>
             <ul className="space-y-2.5 text-sm">
-              {[['My Trips', '/trips'], ['Trip Planner', '/trips'], ['Favorites', '/favorites'], ['Dashboard', '/dashboard']].map(([label, to]) => (
+              {[['Planner', '/planner'], ['My Trips', '/trips'], ['Favorites', '/favorites'], ['Dashboard', '/dashboard']].map(([label, to]) => (
                 <li key={label}>
                   <Link to={to} className="text-neutral-400 hover:text-white transition-colors">{label}</Link>
                 </li>

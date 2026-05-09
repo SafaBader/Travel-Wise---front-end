@@ -15,8 +15,8 @@ const ALL_NAV_ITEMS = [
     description: 'Save your dream destinations and access them anytime.',
   },
   {
-    to: '/trips', label: 'My Trips', icon: Map, protected: true,
-    description: 'Plan multi-day itineraries with drag-and-drop ease.',
+    to: '/planner', label: 'Planner', icon: Map, protected: true,
+    description: 'Create smart multi-day itineraries with drag-and-drop ease.',
   },
   {
     to: '/dashboard', label: 'Dashboard', icon: LayoutDashboard, protected: true,
