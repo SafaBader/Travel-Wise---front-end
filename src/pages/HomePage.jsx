@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Search, ArrowRight, Star, MapPin, Users, Compass, Zap, Clock, ChevronRight, Mountain, Layers } from 'lucide-react';
 import { usePlaces, useCategories } from '../hooks/usePlaces';
+import { useFavorites } from '../hooks/useFavorites';
 import PlaceCard from '../components/places/PlaceCard';
 import LoadingSpinner from '../components/ui/LoadingSpinner';
 
@@ -69,6 +70,7 @@ export default function HomePage() {
   const navigate = useNavigate();
   const { places: featured } = usePlaces({ featured: true });
   const { categories } = useCategories();
+  const { isFavorite, toggleFavorite } = useFavorites();
 
   const visibleCategories = categories.filter(cat =>
     FEATURED_CATEGORY_NAMES.includes(cat.name)
@@ -222,7 +224,13 @@ export default function HomePage() {
           ) : (
             <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {featured.slice(0, 8).map(place => (
-                <PlaceCard key={place.id} place={place} />
+                <PlaceCard
+                  key={place.id}
+                  place={place}
+                  showFavorite
+                  isFavorite={isFavorite(place.id)}
+                  onToggleFavorite={toggleFavorite}
+                />
               ))}
             </section>
           )}

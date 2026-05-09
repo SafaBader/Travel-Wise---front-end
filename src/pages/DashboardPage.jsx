@@ -7,6 +7,7 @@ import {
 import { useAuth } from '../contexts/AuthContext';
 import { useTrips } from '../hooks/useTrips';
 import { useFavorites } from '../hooks/useFavorites';
+import { api } from '../lib/api';
 import { format } from '../utils/date';
 
 const STATUS_CONFIG = {
@@ -16,6 +17,11 @@ const STATUS_CONFIG = {
   completed: { label: 'Completed', class: 'bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-400', icon: CheckCircle },
 };
 
+function getReviewUserId(review) {
+  const reviewUser = review.userId || review.user || review.profile || review.user_id;
+  return reviewUser?.id || reviewUser?._id || reviewUser;
+}
+
 export default function DashboardPage() {
   const { profile, user } = useAuth();
   const { trips } = useTrips();
@@ -23,7 +29,29 @@ export default function DashboardPage() {
   const [reviewCount, setReviewCount] = useState(0);
 
   useEffect(() => {
-    setReviewCount(0);
+    let isMounted = true;
+
+    const fetchReviewCount = async () => {
+      if (!user?.id) {
+        setReviewCount(0);
+        return;
+      }
+
+      try {
+        const data = await api.get('/reviews');
+        const reviews = Array.isArray(data) ? data : data?.reviews || [];
+        const count = reviews.filter(review => getReviewUserId(review) === user.id).length;
+        if (isMounted) setReviewCount(count);
+      } catch {
+        if (isMounted) setReviewCount(0);
+      }
+    };
+
+    fetchReviewCount();
+
+    return () => {
+      isMounted = false;
+    };
   }, [user]);
 
   const upcoming = trips.filter(t => t.status === 'upcoming' || t.status === 'ongoing');
@@ -100,7 +128,7 @@ export default function DashboardPage() {
                   return (
                     <Link
                       key={trip.id}
-                      to={`/trips/${trip.id}`}
+                      to={`/planner/${trip.id}`}
                       className="flex items-center gap-4 p-3 rounded-xl hover:bg-neutral-50 dark:hover:bg-neutral-800/50 transition-colors group"
                     >
                       <section className="w-12 h-12 rounded-xl overflow-hidden shrink-0 bg-neutral-100 dark:bg-neutral-800">
@@ -159,7 +187,7 @@ export default function DashboardPage() {
               <section className="space-y-2">
                 {[
                   { to: '/explore', icon: Compass, label: 'Explore Destinations', color: 'bg-primary-50 dark:bg-primary-900/30 text-primary-700 dark:text-primary-400' },
-                  { to: '/trips', icon: Plus, label: 'Plan a New Trip', color: 'bg-secondary-50 dark:bg-secondary-900/30 text-secondary-700 dark:text-secondary-400' },
+                  { to: '/planner', icon: Plus, label: 'Plan a New Trip', color: 'bg-secondary-50 dark:bg-secondary-900/30 text-secondary-700 dark:text-secondary-400' },
                   { to: '/favorites', icon: Heart, label: 'View Favorites', color: 'bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400' },
                 ].map(({ to, icon: Icon, label, color }) => (
                   <Link
