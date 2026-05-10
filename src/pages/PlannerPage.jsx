@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { AlertTriangle, History, Plus, Route } from 'lucide-react';
 import { useTrips } from '../hooks/useTrips';
 import PlacePicker from '../components/planner/PlacePicker';
-import PlannerDayColumn from '../components/Planner/PlannerDayColumn';
+import PlannerDayColumn from '../components/planner/PlannerDayColumn';
 import { addDateDays, buildDays, makeId, toUtcTime } from '../utils/plannerDates';
 
 const defaultForm = {
